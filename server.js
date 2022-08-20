@@ -13,5 +13,7 @@ const PORT = config.app.port;
 // Connect Database
 ConnectDB();
 
+app.use(express.json())
+
 app.use('/', indexRoutes);
 app.listen(PORT, () => console.log('app listening on port: ', PORT))
