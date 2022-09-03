@@ -7,11 +7,11 @@
    <% }) %> 
 <% } %> 
 
-<form action="/register" method="POST" id="register">
+<form action="/auth/register" method="POST" id="register">
 
   <label>
     <p class="label-txt">ENTER YOUR NAME</p>
-    <input type="text" name="name" value="<%= user.name %>" placeholder="username" class="input">
+    <input type="text" name="username" value="<%= user.name %>" placeholder="username" class="input">
     <div class="line-box">
       <div class="line"></div>
     </div>
@@ -31,7 +31,7 @@
     </div>
   </label>
   <button type="submit" class="submit">submit</button>
-  <a href="/login">Login</a>
+  <a href="/auth/login">Login</a>
 </form>
 
     <%- include('../layout/footer.ejs') %> 

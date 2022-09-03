@@ -13,26 +13,21 @@
 <div id="portfolio-wrapper">
     <div class="container">
       <div class="row text-center">
-        <% videos.forEach(video => { %>
+        <% posts.forEach(post => { %>
           <div class="col-12">
             <div class="card h-100">
-              <!-- <a href="/<%= video.path %>" title="Add Description"> -->
+              <!-- <a href="/<%= post.path %>" title="Add Description"> -->
               <div class="card-body">
-                <h2><%= video.title %></h2>
-                <p class="card-title text-black" style="text-decoration: none;"><%= video.description %></p>
-                <p class="card-text">published: <%= new Date(Number(video.publishDate)).getDate() %>/<%= new Date(Number(video.publishDate)).getDay() %>/<%= new Date(Number(video.publishDate)).getFullYear() %></p>
+                <h2><%= post.title %></h2>
+                <p class="card-title text-black" style="text-decoration: none;"><%= post.description %></p>
+                <p class="card-text">published: <%= new Date(Number(post.publishDate)).getDate() %>/<%= new Date(Number(post.publishDate)).getDay() %>/<%= new Date(Number(post.publishDate)).getFullYear() %></p>
               </div>
               
               </a>
               <div class="card-footer">
-                <a href="/individual/<%=video.id %>" class="btn btn-info"  color: #fff;">View</a>  
+                <a href="/individual/<%=post.id %>" class="btn btn-info"  color: #fff;">View</a>  
               </div>
-              <!-- <div class="comment-box">
-                <button class="btn btn-info comment">comment</button>
-                <form action="">
-                  <input type="text" class="comment-input">
-                </form>
-              </div> -->
+            
             </div>
           </div>
         <% }) %> 

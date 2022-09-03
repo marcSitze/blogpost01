@@ -1,7 +1,15 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
+const config = require("../config")
 
+exports.getRegister = (req, res) => {
+  res.render("register/register", {
+    user: req.body,
+    title: "Register",
+    userAuth: null,
+  });
+};
 exports.createUser = async (req, res) => {
   const errors = [];
   let user;
@@ -10,6 +18,7 @@ exports.createUser = async (req, res) => {
   const { email, username, password } = req.body;
 
   // 1 Check form fields
+  console.log("req.body:", req.body);
   if (!username) {
     errors.push({ msg: "Please enter the Username" });
   }
@@ -24,7 +33,10 @@ exports.createUser = async (req, res) => {
   }
 
   if (errors.length > 0) {
-    return res.status(400).json({
+    return res.status(400).render("register/register", {
+      user: req.body,
+      title: "Register",
+      userAuth: null,
       success: false,
       errors,
     });
@@ -37,7 +49,10 @@ exports.createUser = async (req, res) => {
     if (user) {
       errors.push({ msg: "User already exists" });
       // this means this user exist
-      return res.status(400).json({
+      return res.status(400).render("register/register", {
+        user: req.body,
+        title: "Register",
+        userAuth: null,
         success: false,
         errors,
       });
@@ -60,21 +75,29 @@ exports.createUser = async (req, res) => {
 
     //5 Send access token
 
-    res.status(201).json({
-      success: true,
-      user: newUser,
-    });
+    // res.status(201).json({
+    //   success: true,
+    //   user: newUser,
+    // });
+    res.redirect("/auth/login");
   } catch (err) {
     console.error("RegisterUser: ", err);
   }
 };
-
+exports.getLogin = (req, res) => {
+  res.render("register/login", {
+    user: req.body,
+    title: "Login",
+    userAuth: null,
+  });
+};
 exports.login = async (req, res) => {
   // Get form fields
   const errors = [];
   const { email, password } = req.body;
   let user;
   // check form fields
+
   if (!email) {
     errors.push({ msg: "Please enter the email" });
   }
@@ -88,7 +111,10 @@ exports.login = async (req, res) => {
     if (!user) {
       errors.push({ msg: "User doesn't exists" });
       // this means this user exist
-      return res.status(400).json({
+      return res.status(400).render("register/login", {
+        user: req.body,
+        title: "Login",
+        userAuth: null,
         success: false,
         errors,
       });
@@ -98,7 +124,10 @@ exports.login = async (req, res) => {
     // if no match return error
     if (!isMatch) {
       errors.push({ msg: "Invalid Credidentials" });
-      return res.status(400).json({
+      return res.status(400).render("register/login", {
+        user: req.body,
+        title: "Login",
+        userAuth: null,
         success: false,
         errors,
       });
@@ -110,7 +139,7 @@ exports.login = async (req, res) => {
       },
     };
 
-    const token = await jwt.sign(payload, "my-ultra-secret-jwt", {
+    const token = await jwt.sign(payload,config.auth.jwtSecret , {
       expiresIn: 60 * 60 * 1000 * 24 * 7,
     });
     res.cookie("jwt", token, {
@@ -118,11 +147,13 @@ exports.login = async (req, res) => {
       httpOnly: true,
     });
     // return success
-    res.status(200).json({
-      success: true,
-      user,
-      token,
-    });
+    // res.status(200).json({
+    //   success: true,
+    //   user,
+    //   token,
+    // });
+
+    res.redirect('/')
   } catch (err) {
     console.error("Login: ", err);
   }
