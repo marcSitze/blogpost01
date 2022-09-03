@@ -1,0 +1,56 @@
+<%- include('./layout/header.ejs') %> 
+  <br><br><br>
+<div class="container">
+
+   <!-- Jumbotron Header -->
+   <header class="jumbotron my-3 text-center" id="header" style="background: #dbe1e2;">
+    <h1 class="display-3 lead-1">A Warm Welcome!</h1>
+    <p class="lead-2">A warm welcome and lots of good wishes on becoming part of our growing team. Congratulations and on behalf of all the members. We are all happy and excited about your inputs and contribution to our Network.</p>
+    <!-- <a href="#" class="btn btn-primary btn-lg">Call to action!</a> -->
+  </header>
+</div>
+
+<div id="portfolio-wrapper">
+    <div class="container">
+      <div class="row text-center">
+        <% videos.forEach(video => { %>
+          <div class="col-12">
+            <div class="card h-100">
+              <!-- <a href="/<%= video.path %>" title="Add Description"> -->
+              <div class="card-body">
+                <h2><%= video.title %></h2>
+                <p class="card-title text-black" style="text-decoration: none;"><%= video.description %></p>
+                <p class="card-text">published: <%= new Date(Number(video.publishDate)).getDate() %>/<%= new Date(Number(video.publishDate)).getDay() %>/<%= new Date(Number(video.publishDate)).getFullYear() %></p>
+              </div>
+              
+              </a>
+              <div class="card-footer">
+                <a href="/individual/<%=video.id %>" class="btn btn-info"  color: #fff;">View</a>  
+              </div>
+              <!-- <div class="comment-box">
+                <button class="btn btn-info comment">comment</button>
+                <form action="">
+                  <input type="text" class="comment-input">
+                </form>
+              </div> -->
+            </div>
+          </div>
+        <% }) %> 
+      </div>
+  </div>
+</div>
+<%- include('./layout/footer.ejs') %> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
